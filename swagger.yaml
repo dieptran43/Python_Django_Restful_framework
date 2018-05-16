@@ -1,0 +1,114 @@
+swagger: '2.0'
+info:
+  description: sample request
+  version: 1.0.0
+  title: Sample Circuit Request
+  contact:
+    email: someone@test.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+basePath: /app/v1
+paths:
+  /circuits:
+    get:
+      summary: returns all circuits or circuits of a given customer
+      description: |
+        Passing in the optional customer name we return all circuits and their data related to a given customer. Default operation is to return all circuits.
+      operationId: getCircuits
+      produces:
+        - application/json
+      parameters:
+        - name: customerName
+          in: query
+          description: |
+            the textual customername.
+          required: true
+          type: string
+          format: string
+      responses:
+        '200':
+          description: circuits results matching criteria
+          schema:
+            $ref: '#/definitions/CircuitsResponse'
+        '400':
+          description: bad input parameter
+  /circuit:
+    get:
+      summary: returns a single circuit
+      description: |
+        Passing in the optional customer name we return all circuits and their data related to a given customer. Default operation is to return all circuits.
+      operationId: getCircuit
+      produces:
+        - application/json
+      parameters:
+        - name: circuitId
+          in: path
+          description: |
+            the circuit id.
+          required: true
+          type: string
+          format: string
+      responses:
+        '200':
+          description: circuits results matching criteria
+          schema:
+            $ref: '#/definitions/CircuitsResponse'
+        '400':
+          description: bad input parameter
+definitions:
+  CircuitsResponse:
+    type: object
+    required:
+      - MEP_ID  
+      - CIR_AZ  
+      - CIR_ZA  
+      - CUSTOMER  
+      - CIRCUITID
+      - A_HW_VERSION  
+      - Z_HW_VERSION  
+      - STATE  
+      - CITY  
+      - ADDRESS  
+      - A_IP  
+      - Z_IP
+    properties:
+      responseStatus:
+        type: string
+        description: |
+          enum value representing whether the request was successfully 
+          executed or not
+        enum:
+          - SUCCESS
+          - ERROR
+      errorMessage:
+        type: string
+        example: circuitId not found
+        description: |
+          message providing reason for error status of response.
+      mep_id:
+        type: string
+      cir_az:
+        type: number
+      cir_za:
+        type: number
+      customer:
+        type: string
+      circuitid:
+        type: string
+      a_hw_version:
+        type: string
+      z_hw_version:
+        type: string
+      state:
+        type: string
+      city:
+        type: string
+      address:
+        type: string
+      a_ip:
+        type: string
+      z_ip:
+        type: string
+      
+  
